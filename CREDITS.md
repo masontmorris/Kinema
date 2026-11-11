@@ -23,3 +23,12 @@ The code in this repository is MIT licensed (see `LICENSE`). Its third-party ass
 With these changes the game runs with no network access.
 
 The VFX station's fire effect credits "inspiration" from the Shadertoy "Night Campfire" by Maurogik. The shader here is an independent rewrite on three.js's built-in noise, not a port of that code.
+
+## Playtest bridge
+
+This fork can be driven by the playtest agent's three.js bridge (`@playtest/bridge-three`, MIT or Apache-2.0).
+That package is linked from `../bridge-three`, a junction to a `unity-playtest-agent` checkout's `bridge-three/`.
+
+- **Inert by default:** the bridge does nothing unless the page URL carries `?playtest=<relay url>`.
+- **When active, the game starts the full level directly,** with no main menu.
+- **Action catalog:** `playtest/actions.json` drives the player with the bridge's virtual standard gamepad. Kinema's keyboard controls need pointer lock, which an automated page cannot take.

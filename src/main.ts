@@ -9,6 +9,7 @@ import { shouldUseCompatibilityRenderer } from "@core/mobilePlatform";
 import type { InputState } from "@core/types";
 import RAPIER from "@dimforge/rapier3d-compat";
 import * as THREE from "three";
+import { installBridge } from "@playtest/bridge-three";
 
 function showBootstrapError(err: unknown): void {
   const message = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
@@ -31,6 +32,9 @@ function showBootstrapError(err: unknown): void {
 }
 
 async function bootstrap(): Promise<void> {
+  // The playtest bridge does nothing unless the URL carries ?playtest=<relay url>. It must be installed before
+  // anything schedules frames, so the game's loop runs on the bridge's clock.
+  const bridge = installBridge({ engineVersion: THREE.REVISION });
   const bootstrapParams = new URLSearchParams(window.location.search);
   const forceWebGL = /^(1|true)$/i.test(bootstrapParams.get("forceWebGL") ?? "");
   const allowExperimentalRenderer = /^(1|true)$/i.test(bootstrapParams.get("experimentalRenderer") ?? "");
@@ -139,6 +143,7 @@ async function bootstrap(): Promise<void> {
   renderer.camera.fov = settings.value.cameraFov;
   camera.setBaseFov(settings.value.cameraFov);
   renderer.camera.updateProjectionMatrix();
+  bridge?.attach({ sceneId: "kinema", scene: renderer.scene, camera: renderer.camera, canvas: renderer.canvas });
   const interactionManager = new InteractionManager(physicsWorld, playerController, eventBus);
   const uiManager = new UIManager(eventBus);
   let audioManager: import("@audio/AudioManager").AudioController;
@@ -742,11 +747,12 @@ async function bootstrap(): Promise<void> {
     gameLoop.start();
     registerUnload(null);
     console.log(`[Kinema] Station "${stationParam}" started directly`);
-  } else if (reviewSpawnParam) {
+  } else if (reviewSpawnParam || bridge) {
+    // A spawn to review, or a playtest: start the full level directly, without the main menu.
     await startGame(getProceduralRunFromLocation());
     gameLoop.start();
     registerUnload(null);
-    console.log(`[Kinema] Procedural level started at review spawn "${reviewSpawnParam}"`);
+    console.log(`[Kinema] Procedural level started${reviewSpawnParam ? ` at review spawn "${reviewSpawnParam}"` : " for a playtest"}`);
   } else {
     const menuManager = new MenuManager(
       eventBus,

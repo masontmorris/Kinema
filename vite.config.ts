@@ -16,6 +16,8 @@ export default defineConfig({
   plugins: [],
   server: {
     strictPort: true,
+    // The playtest bridge is a local package linked from ../bridge-three.
+    fs: { allow: ['.', '../bridge-three'] },
   },
   test: {
     environment: 'node',
