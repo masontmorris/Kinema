@@ -76,7 +76,7 @@
           "y": 0.0
         }
       ],
-      "default_lease_s": 0.2
+      "default_lease_s": 0.6
     },
     "look_right": {
       "backend": "input_system",
@@ -88,7 +88,7 @@
           "y": 0.0
         }
       ],
-      "default_lease_s": 0.2
+      "default_lease_s": 0.6
     },
     "look_up": {
       "backend": "input_system",
@@ -100,7 +100,7 @@
           "y": 1.0
         }
       ],
-      "default_lease_s": 0.2
+      "default_lease_s": 0.6
     },
     "look_down": {
       "backend": "input_system",
@@ -112,7 +112,7 @@
           "y": -1.0
         }
       ],
-      "default_lease_s": 0.2
+      "default_lease_s": 0.6
     },
     "jump": {
       "backend": "input_system",
