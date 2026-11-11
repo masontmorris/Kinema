@@ -27,7 +27,7 @@ import {
   type RendererLutPassNode,
   type RendererPostFxUniforms,
 } from "./rendererPipelineBuilder";
-import { ENV_PRESETS } from "./rendererPresets";
+import { ENV_PRESETS, LUT_PRESETS } from "./rendererPresets";
 import { getEffectiveCasStrength, syncCasTexelSize, syncGtaoSettings, syncRuntimePostFxState } from "./rendererQuality";
 import {
   type DenoiseNodeLike,
@@ -87,7 +87,7 @@ export class RendererManager implements Disposable {
   private ssrResolutionScale = 0.5;
   private bloomEnabled = true;
   private vignetteEnabled = true;
-  private lutEnabled = true;
+  private lutEnabled = false;
   private lutStrength = 0.42;
   private lutName = "Cubicle 99";
   private lutReady = false;
@@ -154,7 +154,7 @@ export class RendererManager implements Disposable {
 
     this.renderer = createFallbackRenderer(this.toneExposure);
 
-    void this.loadSingleLut(this.lutName);
+    if (LUT_PRESETS.some((preset) => preset.name === this.lutName)) void this.loadSingleLut(this.lutName);
     this.setGraphicsProfile("balanced");
   }
 

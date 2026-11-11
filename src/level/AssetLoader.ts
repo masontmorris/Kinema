@@ -27,11 +27,11 @@ export class AssetLoader {
     this.loader = new GLTFLoader();
 
     this.dracoLoader = new DRACOLoader();
-    this.dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    this.dracoLoader.setDecoderPath("/libs/draco/");
     this.loader.setDRACOLoader(this.dracoLoader);
 
     this.ktx2Loader = new KTX2Loader();
-    this.ktx2Loader.setTranscoderPath("https://www.gstatic.com/basis-universal/versioned/2021-04-15-ba1c3e4/");
+    this.ktx2Loader.setTranscoderPath("/libs/basis/");
     const effectiveRenderer = renderer ?? AssetLoader.sharedRenderer;
     if (effectiveRenderer) {
       this.ktx2Loader.detectSupport(effectiveRenderer);

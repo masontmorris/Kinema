@@ -11,19 +11,9 @@ export interface EnvironmentPreset {
   file: string | null;
 }
 
-export const LUT_PRESETS: ReadonlyArray<LutPreset> = [
-  { name: "Bourbon 64", file: "Bourbon 64.CUBE", format: "cube" },
-  { name: "Chemical 168", file: "Chemical 168.CUBE", format: "cube" },
-  { name: "Clayton 33", file: "Clayton 33.CUBE", format: "cube" },
-  { name: "Cubicle 99", file: "Cubicle 99.CUBE", format: "cube" },
-  { name: "Remy 24", file: "Remy 24.CUBE", format: "cube" },
-  { name: "Presetpro-Cinematic", file: "Presetpro-Cinematic.3dl", format: "3dl" },
-  { name: "NeutralLUT", file: "NeutralLUT.png", format: "image" },
-  { name: "B&WLUT", file: "B&WLUT.png", format: "image" },
-  { name: "NightLUT", file: "NightLUT.png", format: "image" },
-  { name: "lut", file: "lut.3dl", format: "3dl" },
-  { name: "lut_v2", file: "lut_v2.3dl", format: "3dl" },
-];
+// The original colour-grading presets were removed from this fork: their files were of unknown origin or under
+// terms that forbid redistribution. Colour grading is off; the pipeline still supports LUTs if clean ones are added.
+export const LUT_PRESETS: ReadonlyArray<LutPreset> = [];
 
 export const LUT_NAMES: readonly string[] = LUT_PRESETS.map((preset) => preset.name);
 
