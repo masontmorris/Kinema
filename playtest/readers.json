@@ -1,0 +1,42 @@
+{
+  "readers": {
+    "player_position": {
+      "kind": "vector",
+      "unit": "world units",
+      "why": "The player's world position [x, y, z], three.js frame (y up). Changes when the player moves, jumps, falls or is carried by a platform or vehicle."
+    },
+    "player_velocity": {
+      "kind": "vector",
+      "unit": "world units per second",
+      "why": "The player's physics linear velocity [x, y, z]. y rises on a jump and falls under gravity."
+    },
+    "grounded": {
+      "kind": "bool",
+      "why": "Whether the character controller reports the player standing on ground."
+    },
+    "player_state": {
+      "kind": "string",
+      "why": "The player's movement state machine state, such as idle, move, jump, air or land."
+    },
+    "carrying": {
+      "kind": "bool",
+      "why": "Whether the player is holding a grabbable object."
+    },
+    "in_vehicle": {
+      "kind": "bool",
+      "why": "Whether the player is driving a vehicle (the car or the drone)."
+    },
+    "hearts": {
+      "kind": "number",
+      "why": "The player's current health in hearts. Hazards and falls lower it; it resets on respawn."
+    },
+    "coins_collected": {
+      "kind": "number",
+      "why": "Coins collected in the current run."
+    },
+    "coins_remaining": {
+      "kind": "number",
+      "why": "Coins still to collect in the current run."
+    }
+  }
+}
