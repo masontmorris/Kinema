@@ -143,7 +143,26 @@ async function bootstrap(): Promise<void> {
   renderer.camera.fov = settings.value.cameraFov;
   camera.setBaseFov(settings.value.cameraFov);
   renderer.camera.updateProjectionMatrix();
-  bridge?.attach({ sceneId: "kinema", scene: renderer.scene, camera: renderer.camera, canvas: renderer.canvas });
+  // Readers report game state to the playtest bridge. They are called on each observation, so the ones that read
+  // `game` throw (and report null) until it exists, never a guessed value.
+  const xyz = (v: { x: number; y: number; z: number }): number[] => [v.x, v.y, v.z];
+  bridge?.attach({
+    sceneId: "kinema",
+    scene: renderer.scene,
+    camera: renderer.camera,
+    canvas: renderer.canvas,
+    readers: {
+      player_position: () => xyz(playerController.position),
+      player_velocity: () => xyz(playerController.body.linvel()),
+      grounded: () => playerController.isGrounded,
+      player_state: () => String(playerController.fsm.current),
+      carrying: () => playerController.carriedBody !== null,
+      in_vehicle: () => vehicleManager.isActive(),
+      hearts: () => game.getHealthState().current,
+      coins_collected: () => game.getCollectibleCount(),
+      coins_remaining: () => game.listRemainingCollectibles().length,
+    },
+  });
   const interactionManager = new InteractionManager(physicsWorld, playerController, eventBus);
   const uiManager = new UIManager(eventBus);
   let audioManager: import("@audio/AudioManager").AudioController;
