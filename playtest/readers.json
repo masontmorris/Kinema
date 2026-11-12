@@ -16,7 +16,21 @@
     },
     "player_state": {
       "kind": "string",
-      "why": "The player's movement state machine state, such as idle, move, jump, air or land."
+      "why": "The player's movement state machine state: idle, move, jump, air, airJump, interact, crouch, carry, grab, land, climb or rope.",
+      "values": [
+        "idle",
+        "move",
+        "jump",
+        "air",
+        "airJump",
+        "interact",
+        "crouch",
+        "carry",
+        "grab",
+        "land",
+        "climb",
+        "rope"
+      ]
     },
     "carrying": {
       "kind": "bool",
